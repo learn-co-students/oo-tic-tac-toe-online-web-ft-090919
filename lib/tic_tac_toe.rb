@@ -62,12 +62,16 @@ class TicTacToe
   def won?
     won = nil
     WIN_COMBINATIONS.each do |wincon|
-      won = wincon if @board[wincon[0]] == @board[wincon[1]] && @board[wincon[1]] == @board[wincon[2]] && @board[wincon[0]] != " "
+      #get all unique pieces in the relevent positions
+      pieces = wincon.map { |index| @board[index] }.uniq
+      #If the length is 1 then all the pieces have the same value, if the value isn't blank than someone has won
+      won = wincon if pieces.length == 1 && pieces.first != " "
     end
     won
   end
 
   def full?
+    #Full if none of the spots are empty
     @board.none? { |el| el == " " }
   end
 
@@ -80,6 +84,7 @@ class TicTacToe
   end
 
   def winner
+    #If one isn't nill, return the winning piece, else nill
     !!won? ? @board[won?.first] : nil
   end
 
