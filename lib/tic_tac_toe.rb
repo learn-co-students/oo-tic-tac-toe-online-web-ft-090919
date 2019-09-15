@@ -50,12 +50,13 @@ class TicTacToe
   end
 
   def turn
+    player = current_player
     move = nil
     until (!!move && valid_move?(move))
-      puts "Please enter the location you would like to place a piece"
+      puts "Player #{player}, please enter the location where you would like to place a piece."
       move = input_to_index(gets.strip)
     end
-    move(move, current_player)
+    move(move, player)
     display_board
   end
 
@@ -89,6 +90,7 @@ class TicTacToe
   end
 
   def play
+    display_board
     until over?
       turn
     end
