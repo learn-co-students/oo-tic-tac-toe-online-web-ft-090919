@@ -29,7 +29,7 @@ class TicTacToe
   end
 
   def move(index, token="X")
-   @board[index] = token
+    @board[index] = token
   end
 
   def position_taken?(index)
@@ -37,7 +37,7 @@ class TicTacToe
   end
 
   def valid_move?(index)
-    index >= 0 && index < 9 && !position_taken?(index)
+    index.between?(0,8) && !position_taken?(index)
   end
 
   def turn_count
