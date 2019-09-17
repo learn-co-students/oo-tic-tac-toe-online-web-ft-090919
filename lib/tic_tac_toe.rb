@@ -2,7 +2,9 @@ require "pry"
 
 class TicTacToe
 
-  attr_accessor :board
+  attr_accessor :board, :winner
+
+  @winner = ""
 
   WIN_COMBINATIONS = [
     [0,1,2],
@@ -102,6 +104,8 @@ class TicTacToe
 
     end
 
+    @winner = winner
+
     winner
   end
 
@@ -121,6 +125,44 @@ class TicTacToe
     end
     # binding.pry
   end
+
+  def draw?
+
+    win_line = self.won?
+
+    if win_line
+      false
+    else
+      true
+    end
+
+  end
+
+  def over?
+    if full?
+      if draw?
+        true
+      elsif won?
+        true
+      else
+        false
+      end
+    end
+  end
+
+  def winner
+
+    win_line = won?
+
+    if win_line
+      line = @board[win_line[0]] + @board[win_line[1]] + @board[win_line[2]]
+    else
+      return win_line
+    end
+
+    line[0]
+  end
+
 
 # end of class
 end
