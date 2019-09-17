@@ -40,7 +40,7 @@ class TicTacToe
     index
   end
 
-  def move(index, player)
+  def move(index, player = "X")
     @board[index] = player
   end
 
@@ -49,7 +49,7 @@ class TicTacToe
   end
 
   def valid_move?(index)
-    index >= 0 && index <= 8 && !position_taken?(index)
+    (index >= 0 && index <= 8 && !position_taken?(index)) && !position_taken?(index)
   end
 
   def turn_count
@@ -59,34 +59,32 @@ class TicTacToe
 
   def current_player
     player = nil
-    moves_made = 0
 
-    moves_made += @board.count("X")
-    moves_made += @board.count("O")
+    count = turn_count
 
-    player = moves_made% 2 == 0 ? player = "X" : player = "O"
-    # binding.pry
+    count % 2 == 0 ? player = "X" : player = "O"
+
     player
   end
 
   def turn
 
+    player = current_player
+
+    puts "Player #{player} please enter a positon (1-9): "
     input = gets
 
     index = input_to_index(input)
 
-    if !valid_move?(index)
-      puts "invalid"
+    until valid_move?(index)
+      puts "invalid move"
+      puts "Player #{player} please enter a positon (1-9): "
       input = gets
+      index = input_to_index(input)
     end
 
-    # if valid_move?(index)
-      player = current_player
       move(index, player)
       display_board
-      # binding.pry
-
-    # end
 
   end
 
@@ -118,36 +116,31 @@ class TicTacToe
 
     if total == 9
       true
-    elsif x_count == 4 && o_count == 4
-      true
+
     else
       false
     end
-    # binding.pry
+
   end
 
   def draw?
 
-    win_line = self.won?
-
-    if win_line
-      false
-    else
+    if !won? && full?
       true
+    else
+      false
     end
 
   end
 
   def over?
-    if full?
-      if draw?
-        true
-      elsif won?
-        true
-      else
-        false
-      end
+
+    if draw? || won?
+      true
+    else
+      false
     end
+
   end
 
   def winner
@@ -161,6 +154,22 @@ class TicTacToe
     end
 
     line[0]
+  end
+
+  # ***************************************** END OF FIRST BATCH OF TEST *********************************************8
+
+  def play
+
+    until over?
+      turn
+    end
+
+    if self.won?
+      puts "Congratulations #{self.winner}!"
+    elsif self.draw?
+      puts "Cat's Game!"
+    end
+
   end
 
 
