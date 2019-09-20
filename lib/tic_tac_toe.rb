@@ -1,6 +1,9 @@
 class TicTacToe
   attr_accessor :board
 
+  # cell_0, cell_1, cell_2
+  # cell_3, cell_4, cell_5
+  # cell_6, cell_7, cell_8
   WIN_COMBINATIONS = [
     # HORIZONTAL WINS
     [0, 1, 2],
@@ -59,7 +62,7 @@ class TicTacToe
   end
 
   def turn_count
-    @board.reject { |cell| cell == " " }.length
+    @board.count {|token| token == "X"|| token == "O"}
   end
 
   def current_player
@@ -78,7 +81,7 @@ class TicTacToe
   end
 
   def full?
-    turn_count == 9
+    !@board.include?(" ")
   end
   
   def draw?
