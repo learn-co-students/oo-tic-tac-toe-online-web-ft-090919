@@ -69,10 +69,6 @@ class TicTacToe
     turn_count % 2 == 0 ? "X" : "O"
   end
 
-  def get_player_cells(token)
-    @board.each_index.select{ |i| arr[i] == token }
-  end
-
   def won?
     WIN_COMBINATIONS.find { |combo|
       board_cells = combo.collect { |postion| @board[postion] }
@@ -102,7 +98,7 @@ class TicTacToe
     if won?
       puts "Congratulations #{winner}!"
     elsif draw?
-      puts "Cat\'s Game!"
+      puts "Cat's Game!"
     end
   end
 end
