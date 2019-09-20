@@ -1,4 +1,13 @@
-require 'pry'
+ puts "What position would you like between 1-9?"
+     input = gets.chomp
+     position = input_to_index(input)
+     token = current_player
+     if valid_move?(position) 
+       move(position, token)
+       display_board
+       
+       
+  require 'pry'
 
 class TicTacToe
   attr_accessor :board
@@ -54,15 +63,14 @@ class TicTacToe
      puts "Please enter a number (1-9):"
      input = gets.chomp
      position = input_to_index(input)
-     token = current_player
      if valid_move?(position)
+       token = current_player
        move(position, token)
-       display_board
       else
         turn
       end 
+      display_board
    end 
-
    
   
   def turn_count 
@@ -86,28 +94,30 @@ class TicTacToe
   
   def won?
     WIN_COMBINATIONS.detect do |combo| if (@board[combo[0]]) == "X" && (@board[combo[1]]) == "X" && (@board[combo[2]]) == "X"  
-      return combo 
+      combo 
     elsif (@board[combo[0]]) == "O" && (@board[combo[1]]) == "O" && (@board[combo[2]]) == "O" 
-     return combo 
-    end
-      false 
+     combo 
+    else
+      nil 
+    end 
   end
  end 
- 
 
  def full?
    @board.all? { |spot| spot != " " }
  end
  
  def draw?
-   !(won?) && (full?)
+   if full? == true && won? == nil 
+     true 
+   end 
  end 
-
  
  def over?
-   won? || full? || draw? 
+   if won? != nil || draw? == true 
+     true
+   end 
  end 
-
  
  def winner
     WIN_COMBINATIONS.detect do |combo| if (@board[combo[0]]) == "X" && (@board[combo[1]]) == "X" && (@board[combo[2]]) == "X"  
@@ -120,21 +130,23 @@ class TicTacToe
   end
  end 
  
-
- 
   def play 
-    while (over?) == false   
-      turn
+    while over? != true 
+    turn
+      if turn == won?
+      "Congratulations #{winner}!"
+      elsif  draw?
+      "Cat's Game!"
+      else 
+      play 
+      end 
     end 
-    if won?
-      puts "Congratulations #{winner}!"
-    elsif draw?
-      puts "Cat's Game!"
-    end 
-  end 
-
+   
+   end 
+      
+  
+ 
 end 
-
 
 # Array:
 # 0  1  2 
