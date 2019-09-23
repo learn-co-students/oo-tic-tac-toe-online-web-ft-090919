@@ -1,6 +1,6 @@
 require_relative '../lib/tic_tac_toe.rb'
 
-escribe './lib/tic_tac_toe.rb' do
+describe './lib/tic_tac_toe.rb' do
   describe TicTacToe do
     describe '#initialize' do
       it 'assigns an instance variable @board to an array with 9 blank spaces " "' do
